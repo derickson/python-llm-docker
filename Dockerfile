@@ -16,7 +16,7 @@ COPY *.py /app
 # Expose the port the app will listen on
 EXPOSE 80
 
-VOLUME ./cache:/app/models
+VOLUME ./cache:/app/cache
 
 # Run the command to start the app
 CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "80"]

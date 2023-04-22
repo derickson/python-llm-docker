@@ -1,1 +1,1 @@
-docker run -d -p 8080:80 -v ./cache:/app/models python-llm-docker
+docker run --memory=8g -d -p 8080:80 -v $(pwd)/cache:/app/cache python-llm-docker
