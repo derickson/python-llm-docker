@@ -6,6 +6,8 @@ from transformers import AutoTokenizer, AutoModelForCausalLM, pipeline, AutoMode
 import gc
 import os
 
+
+
 OPTION_CUDA_USE_GPU = os.getenv('OPTION_CUDA_USE_GPU', 'False') == "True"
 cache_dir="./cache"
 
@@ -57,7 +59,7 @@ def getFlanXL():
             model = AutoModelForSeq2SeqLM.from_pretrained(model_id,cache_dir=cache_dir, load_in_8bit=True, device_map='auto') 
             model.cuda()
     else:
-        model = AutoModelForSeq2SeqLM.from_pretrained(model_id, cache_dir=cache_dir) 
+        model = AutoModelForSeq2SeqLM.from_pretrained(model_id,cache_dir=cache_dir) 
     
     pipe = pipeline(
         "text2text-generation",
@@ -114,3 +116,11 @@ def get_llm():
 #     prompt_ignorant = PromptTemplate(template=template_ignorant, input_variables=["question"])
 
 #     return LLMChain(prompt=prompt_ignorant, llm=local_llm)
+
+
+def prompt(question, template=None):
+    #prompt = PromptTemplate(template=template, input_variables=["question"])
+    #llm_chain = LLMChain(prompt=prompt, llm=local_llm)
+    response = local_llm(question)
+    # print(response)
+    return str(response)
