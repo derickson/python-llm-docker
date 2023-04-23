@@ -7,9 +7,15 @@ import gc
 import os
 
 
+cache_dir="../cache" 
 
 OPTION_CUDA_USE_GPU = os.getenv('OPTION_CUDA_USE_GPU', 'False') == "True"
-cache_dir="./cache" 
+if OPTION_CUDA_USE_GPU:
+    print("identified that you want to use CUDA")
+
+## options are flan and stablelm
+MODEL = os.getenv("OPTION_MODEL_SIMPLE_NAME", "flan")
+
 
 
 def clean_cache(p=False):
@@ -70,8 +76,7 @@ def getFlanXL():
     llm = HuggingFacePipeline(pipeline=pipe)
     return llm
 
-## options are flan and stablelm
-MODEL = "flan"
+
 
 
 if MODEL == "flan":

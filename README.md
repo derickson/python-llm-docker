@@ -11,6 +11,17 @@ pip3 install -r requirments-local.txt
 uvicorn app:app --reload
 ```
 
+with Windows
+```sh
+cd ..
+mkdir cache
+cd python-llm-docker
+py -m venv env
+.\env\Scripts\activate
+pip install -r requirements-win.txt
+run.bat
+```
+
 
 ## Using DOcker
 On mac using docker up the memory limit of your docker containers to 8 GB in the docker desktop preferences
