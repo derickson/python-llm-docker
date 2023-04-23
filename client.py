@@ -2,15 +2,15 @@ from langchain import PromptTemplate, LLMChain
 
 from lib_webLLM import WebLLM
 
-llm = WebLLM(url="http://localhost:8080/question")
+llm = WebLLM(url="http://nuc:8090/question")
 
 def main():
     # Your program logic here
     while True:
 
         template_informed = """
-        I am a helpful AI that answers questions. when I don't know the answer I say I don't know. 
-        I know: {context}
+        I am a helpful AI that answers questions. When I don't know the answer I say I don't know. 
+        I know context: {context}
         when asked: {question}
         my response using only information in the context is: """
 
@@ -23,8 +23,8 @@ def main():
         question =  input("Ask a question>> ")
         informed_response = chain.run(context=informed_context,question=question)
         uninformed_response = llm(question)
-        print(f"Answer from LLM with context : {informed_response}")
-        print(f"Answer from LLM no context   : {uninformed_response}")
+        print(f"\tAnswer from LLM with context : {informed_response}")
+        print(f"\tAnswer from LLM no context   : {uninformed_response}")
 
 if __name__ == '__main__':
     main()
