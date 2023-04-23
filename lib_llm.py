@@ -38,8 +38,10 @@ def getStableLM3B():
     model_id = 'stabilityai/stablelm-tuned-alpha-3b'
     print(f">> Prep. Get {model_id} ready to go")
     tokenizer = AutoTokenizer.from_pretrained(model_id, cache_dir=cache_dir) 
+    
     clean_cache()
     model = AutoModelForCausalLM.from_pretrained(model_id, cache_dir=cache_dir)
+    model.half().cuda()
     clean_cache()
     pipe = pipeline(
         "text-generation",
@@ -47,11 +49,25 @@ def getStableLM3B():
         tokenizer=tokenizer, 
         max_length=256,
         temperature=0.7,
+        device=0,
         stopping_criteria=StoppingCriteriaList([StopOnTokens()]),
         pad_token_id=50256, num_return_sequences=1
     )
     llm = HuggingFacePipeline(pipeline=pipe)
     return llm
+
+    # repo_id = "stabilityai/stablelm-tuned-alpha-3b"
+    # llm = HuggingFaceHub(repo_id=repo_id, model_kwargs={"temperature":0.7, "max_length":500, "max_new_tokens":64})
+    # # llm = AutoModelForCausalLM.from_pretrained(model_id, cache_dir=cache_dir)
+    # return llm
+
+    # llm = HuggingFacePipeline.from_model_id(
+    #     model_id=model_id, 
+    #     task="text-generation", 
+    #     device=0,
+    #     model_kwargs={"temperature":0.7, "max_length":64})
+    # return llm
+
 
 
 
